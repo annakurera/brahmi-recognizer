@@ -1,3 +1,4 @@
+import { MotionConfig } from 'framer-motion'
 import Footer from './components/Footer'
 import Header from './components/Header'
 import MethodologySection from './components/MethodologySection'
@@ -6,14 +7,16 @@ import UploadSection from './components/UploadSection'
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-parchment font-sans text-charcoal">
-      <Header />
-      <main>
-        <UploadSection />
-        <MethodologySection />
-        <TeamSection />
-      </main>
-      <Footer />
-    </div>
+    <MotionConfig reducedMotion="user">
+      <div className="min-h-screen bg-linen text-ink">
+        <Header />
+        <main>
+          <UploadSection />
+          <MethodologySection />
+          <TeamSection />
+        </main>
+        <Footer />
+      </div>
+    </MotionConfig>
   )
 }
