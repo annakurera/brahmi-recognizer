@@ -4,30 +4,30 @@ export default {
   theme: {
     extend: {
       colors: {
-        parchment: '#faf8f5',
-        ivory: '#f3efe8',
-        charcoal: '#2d2d2d',
-        stone: {
-          400: '#8a8a8a',
-          500: '#6f6f6f',
-          600: '#5c5c5c',
+        paper: '#ffffff',
+        linen: '#f4ede0',
+        sand: {
+          DEFAULT: '#e7dbc4',
+          deep: '#d6c5a4',
         },
-        uop: {
-          blue: '#1e3a5f',
-          gold: '#c9a227',
+        rule: '#d9c9aa',
+        ink: {
+          DEFAULT: '#2a2019',
+          soft: '#5b4e42',
         },
-        success: {
-          border: '#3d7a6a',
-          bg: '#eef6f3',
+        muted: '#6f6254',
+        bronze: {
+          DEFAULT: '#8a6a36',
+          light: '#c2a574',
         },
+        verdigris: '#4f6f5e',
+        oxblood: '#8e3b2e',
       },
       fontFamily: {
-        serif: ['"Playfair Display"', 'Georgia', 'serif'],
-        sans: ['"DM Sans"', 'system-ui', 'sans-serif'],
-      },
-      boxShadow: {
-        soft: '0 12px 40px rgba(45, 45, 45, 0.08)',
-        card: '0 8px 28px rgba(30, 58, 95, 0.08)',
+        display: ['Cinzel', '"Trajan Pro"', 'Georgia', 'serif'],
+        serif: ['"EB Garamond"', 'Garamond', 'Georgia', 'serif'],
+        sans: ['"EB Garamond"', 'Garamond', 'Georgia', 'serif'],
+        brahmi: ['"Noto Sans Brahmi"', 'sans-serif'],
       },
     },
   },
