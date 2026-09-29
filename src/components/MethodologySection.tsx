@@ -1,18 +1,35 @@
-import { motion } from 'framer-motion'
 import type { ReactNode } from 'react'
-
-const fade = {
-  initial: { opacity: 0, y: 18 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: '-80px' },
-  transition: { duration: 0.6, ease: 'easeOut' as const },
-}
 
 function IconWrap({ children }: { children: ReactNode }) {
   return (
-    <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-ivory text-uop-blue">
+    <span
+      className="mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-bronze-light text-bronze"
+      aria-hidden="true"
+    >
       {children}
     </span>
+  )
+}
+
+function Study({
+  numeral,
+  kicker,
+  title,
+  children,
+}: {
+  numeral: string
+  kicker: string
+  title: string
+  children: ReactNode
+}) {
+  return (
+    <article className="plate p-7 sm:p-10">
+      <p className="text-lg italic text-bronze">
+        <span className="font-display not-italic">{numeral}.</span> {kicker}
+      </p>
+      <h3 className="mt-2 font-serif text-[1.75rem] font-medium leading-snug text-ink">{title}</h3>
+      <ul className="mt-6 space-y-4 text-[1.05rem] leading-relaxed text-ink-soft">{children}</ul>
+    </article>
   )
 }
 
@@ -78,99 +95,78 @@ const chart = (
 
 export default function MethodologySection() {
   return (
-    <section className="bg-ivory/70 py-16 sm:py-20">
+    <section className="border-y border-rule bg-sand/60 py-16 sm:py-24">
       <div className="mx-auto max-w-6xl px-6 sm:px-8">
-        <motion.div {...fade} className="max-w-2xl">
-          <h2 className="font-serif text-3xl text-charcoal sm:text-4xl">For Anyone Interested</h2>
-          <p className="mt-3 text-stone-500">
+        <div className="mx-auto max-w-2xl text-center">
+          <h2 className="font-serif text-[2rem] font-medium leading-tight text-ink sm:text-[2.5rem]">
+            For Anyone Interested
+          </h2>
+          <p className="mt-3 text-lg leading-relaxed text-ink-soft">
             Curious about how this works? Here's a brief look at the research behind this tool.
           </p>
-        </motion.div>
+        </div>
 
-        <div className="mt-10 grid gap-6 lg:grid-cols-2">
-          <motion.article
-            {...fade}
-            className="rounded-2xl border border-stone-400/20 bg-white p-7 shadow-card transition duration-300 hover:-translate-y-0.5 hover:shadow-soft sm:p-8"
-          >
-            <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-uop-gold">
-              Data
-            </p>
-            <h3 className="mt-2 font-serif text-2xl text-charcoal">
-              Dataset Preparation using 3D Rendering
-            </h3>
-            <ul className="mt-6 space-y-4 text-sm leading-relaxed text-stone-600">
-              <li className="flex gap-3">
-                <IconWrap>{cube}</IconWrap>
-                <span>
-                  A procedural 3D synthesis pipeline built in Blender generates photorealistic synthetic Brahmi character samples.
-                </span>
-              </li>
-              <li className="flex gap-3">
-                <IconWrap>{mountain}</IconWrap>
-                <span>
-                  Realistic stone micro-textures derived from actual Sri Lankan geological sites (Wanni and Vijayan Complex gneiss rock).
-                </span>
-              </li>
-              <li className="flex gap-3">
-                <IconWrap>{layers}</IconWrap>
-                <span>
-                  Displacement height-mapping simulates real carving depth, while domain randomization varies lighting, camera position, and stone texture across 26,000+ renders.
-                </span>
-              </li>
-              <li className="flex gap-3">
-                <IconWrap>{archive}</IconWrap>
-                <span>This approach overcomes the severe scarcity of real-world inscription data.</span>
-              </li>
-            </ul>
-          </motion.article>
+        <div className="mt-12 grid gap-8 lg:grid-cols-2">
+          <Study numeral="I" kicker="Data" title="Dataset Preparation using 3D Rendering">
+            <li className="flex gap-3">
+              <IconWrap>{cube}</IconWrap>
+              <span>
+                A procedural 3D synthesis pipeline built in Blender generates photorealistic synthetic Brahmi character samples.
+              </span>
+            </li>
+            <li className="flex gap-3">
+              <IconWrap>{mountain}</IconWrap>
+              <span>
+                Realistic stone micro-textures derived from actual Sri Lankan geological sites (Wanni and Vijayan Complex gneiss rock).
+              </span>
+            </li>
+            <li className="flex gap-3">
+              <IconWrap>{layers}</IconWrap>
+              <span>
+                Displacement height-mapping simulates real carving depth, while domain randomization varies lighting, camera position, and stone texture across 26,000+ renders.
+              </span>
+            </li>
+            <li className="flex gap-3">
+              <IconWrap>{archive}</IconWrap>
+              <span>This approach overcomes the severe scarcity of real-world inscription data.</span>
+            </li>
+          </Study>
 
-          <motion.article
-            {...fade}
-            transition={{ ...fade.transition, delay: 0.08 }}
-            className="rounded-2xl border border-stone-400/20 bg-white p-7 shadow-card transition duration-300 hover:-translate-y-0.5 hover:shadow-soft sm:p-8"
-          >
-            <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-uop-blue">
-              Model
-            </p>
-            <h3 className="mt-2 font-serif text-2xl text-charcoal">
-              Training the Visformer-Small Architecture
-            </h3>
-            <ul className="mt-6 space-y-4 text-sm leading-relaxed text-stone-600">
-              <li className="flex gap-3">
-                <IconWrap>{network}</IconWrap>
-                <span>
-                  A hybrid CNN-Transformer model (Visformer-Small) combines local stroke detection with global character structure understanding.
-                </span>
-              </li>
-              <li className="flex gap-3">
-                <IconWrap>{mirror}</IconWrap>
-                <span>
-                  Script-aware augmentation: horizontal flipping is disabled to preserve the directional identity (chirality) of Brahmi characters.
-                </span>
-              </li>
-              <li className="flex gap-3">
-                <IconWrap>{balance}</IconWrap>
-                <span>
-                  Weighted Focal Loss handles class imbalance; MixUp, CutMix, and EMA regularization prevent overfitting on scarce data.
-                </span>
-              </li>
-              <li className="flex gap-3">
-                <IconWrap>{flask}</IconWrap>
-                <span>
-                  Test-Time Augmentation (TTA) averages multiple prediction views for robustness.
-                </span>
-              </li>
-              <li className="flex gap-3">
-                <IconWrap>{chart}</IconWrap>
-                <span>
-                  <strong className="font-medium text-charcoal">
-                    Key result: 98.67% TTA accuracy on the combined real + synthetic dataset
-                  </strong>{' '}
-                  — a +19% improvement over training on real data alone (79.66%).
-                </span>
-              </li>
-            </ul>
-          </motion.article>
+          <Study numeral="II" kicker="Model" title="Training the Visformer-Small Architecture">
+            <li className="flex gap-3">
+              <IconWrap>{network}</IconWrap>
+              <span>
+                A hybrid CNN-Transformer model (Visformer-Small) combines local stroke detection with global character structure understanding.
+              </span>
+            </li>
+            <li className="flex gap-3">
+              <IconWrap>{mirror}</IconWrap>
+              <span>
+                Script-aware augmentation: horizontal flipping is disabled to preserve the directional identity (chirality) of Brahmi characters.
+              </span>
+            </li>
+            <li className="flex gap-3">
+              <IconWrap>{balance}</IconWrap>
+              <span>
+                Weighted Focal Loss handles class imbalance; MixUp, CutMix, and EMA regularization prevent overfitting on scarce data.
+              </span>
+            </li>
+            <li className="flex gap-3">
+              <IconWrap>{flask}</IconWrap>
+              <span>
+                Test-Time Augmentation (TTA) averages multiple prediction views for robustness.
+              </span>
+            </li>
+            <li className="flex gap-3 border-t border-rule pt-4">
+              <IconWrap>{chart}</IconWrap>
+              <span>
+                <strong className="font-semibold text-ink">
+                  Key result: 98.67% TTA accuracy on the combined real + synthetic dataset
+                </strong>{' '}
+                — a +19% improvement over training on real data alone (79.66%).
+              </span>
+            </li>
+          </Study>
         </div>
       </div>
     </section>
