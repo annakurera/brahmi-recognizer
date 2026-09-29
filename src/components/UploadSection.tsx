@@ -35,14 +35,18 @@ async function downscaleImage(file: File, maxEdge = MAX_IMAGE_EDGE): Promise<Blo
 
 function Spinner({ waking }: { waking: boolean }) {
   return (
-    <div className="flex flex-col items-center justify-center gap-4 py-10 text-center">
-      <div className="h-10 w-10 animate-spin rounded-full border-2 border-uop-gold/30 border-t-uop-blue" />
-      <p className="font-serif text-lg text-charcoal">
+    <div
+      className="flex flex-col items-center justify-center gap-4 py-10 text-center"
+      role="status"
+      aria-live="polite"
+    >
+      <div className="h-10 w-10 animate-spin rounded-full border-2 border-sand border-t-bronze" />
+      <p className="font-serif text-xl italic text-ink">
         {waking
           ? 'Waking up the model... this may take up to 60 seconds'
           : 'Analyzing inscription...'}
       </p>
-      {!waking && <p className="text-sm text-stone-500">This may take a few moments.</p>}
+      {!waking && <p className="text-base text-muted">This may take a few moments.</p>}
     </div>
   )
 }
@@ -114,25 +118,23 @@ export default function UploadSection() {
     setIsDragging(true)
   }
 
+  const frameTone = error
+    ? 'border-oxblood/50'
+    : isDragging
+      ? 'border-bronze'
+      : 'border-verdigris/60'
+
   return (
-    <section className="mx-auto max-w-6xl px-6 py-16 sm:px-8 sm:py-20">
-      <motion.div
-        initial={{ opacity: 0, y: 18 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: '-80px' }}
-        transition={{ duration: 0.6, ease: 'easeOut' }}
-      >
-        <p className="text-center text-[11px] font-medium uppercase tracking-[0.24em] text-uop-blue/80">
-          Recognition
-        </p>
-        <h2 className="mt-2 text-center font-serif text-3xl text-charcoal sm:text-4xl">
+    <section className="mx-auto max-w-5xl px-6 py-16 sm:px-8 sm:py-20">
+      <div className="text-center">
+        <h2 className="font-serif text-[2rem] font-medium leading-tight text-ink sm:text-[2.5rem]">
           Upload an inscription
         </h2>
-        <p className="mx-auto mt-3 max-w-xl text-center text-stone-500">
+        <p className="mx-auto mt-3 max-w-xl text-lg leading-relaxed text-ink-soft">
           Drop a photograph or rubbing of an Early Brahmi character. The model
           returns a ranked list of likely classes.
         </p>
-      </motion.div>
+      </div>
 
       <div className="mt-10">
         {!hasImage ? (
@@ -142,54 +144,59 @@ export default function UploadSection() {
             onDrop={onDrop}
             onDragOver={onDragOver}
             onDragLeave={() => setIsDragging(false)}
-            className={`group w-full rounded-3xl border-2 border-dashed px-6 py-16 text-center transition-all duration-300 sm:py-20 ${
-              isDragging
-                ? 'border-uop-blue bg-uop-blue/5'
-                : 'border-stone-400/70 bg-white/50 hover:border-uop-blue/60 hover:bg-white'
-            }`}
+            className="group block w-full border border-rule bg-paper p-2.5 text-center sm:p-3"
           >
-            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full border border-stone-400/40 bg-white shadow-soft transition-transform duration-300 group-hover:scale-105">
-              <svg
-                viewBox="0 0 24 24"
-                className="h-6 w-6 text-uop-blue"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                aria-hidden="true"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-7.5L12 3m0 0 4.5 6m-4.5-6v12.75"
-                />
-              </svg>
-            </div>
-            <p className="mt-5 font-serif text-2xl text-charcoal">Drop an image here</p>
-            <p className="mt-2 text-sm text-stone-500">
-              or click to browse from your device
-            </p>
+            <span
+              className={`flex flex-col items-center border border-dashed px-6 py-14 transition-colors duration-300 sm:py-20 ${
+                isDragging
+                  ? 'border-bronze bg-linen'
+                  : 'border-bronze-light group-hover:border-bronze group-hover:bg-linen/60'
+              }`}
+            >
+              <span className="flex h-14 w-14 items-center justify-center rounded-full border border-bronze-light text-bronze transition-colors duration-300 group-hover:border-bronze">
+                <svg
+                  viewBox="0 0 24 24"
+                  className="h-6 w-6"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.4"
+                  aria-hidden="true"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-7.5L12 3m0 0 4.5 6m-4.5-6v12.75"
+                  />
+                </svg>
+              </span>
+              <span className="mt-5 font-serif text-2xl text-ink">Drop an image here</span>
+              <span className="mt-1 text-lg italic text-muted">
+                or click to browse from your device
+              </span>
+              <span className="mt-5 text-sm text-muted">JPEG, PNG or WebP</span>
+            </span>
           </button>
         ) : (
           <div
             onDrop={onDrop}
             onDragOver={onDragOver}
             onDragLeave={() => setIsDragging(false)}
-            className={`rounded-3xl border-2 p-4 transition-colors duration-300 sm:p-6 ${
-              hasImage && !error
-                ? 'border-success-border bg-success-bg/60'
-                : 'border-stone-400/50 bg-white/40'
-            } ${error ? 'border-red-300 bg-red-50/50' : ''} ${
-              isDragging ? 'border-uop-blue' : ''
-            }`}
+            className={`plate p-5 transition-colors duration-300 sm:p-8 ${frameTone}`}
           >
-            <div className="grid items-start gap-6 lg:grid-cols-2">
-              <div className="overflow-hidden rounded-2xl bg-white shadow-soft">
-                <img
-                  src={previewUrl ?? ''}
-                  alt="Uploaded inscription"
-                  className="max-h-[420px] w-full object-contain"
-                />
-              </div>
+            <div className="grid items-start gap-8 lg:grid-cols-2">
+              <figure className="m-0">
+                <div className="border border-rule bg-linen p-2">
+                  <img
+                    src={previewUrl ?? ''}
+                    alt="Uploaded inscription"
+                    className="mx-auto max-h-[420px] w-full object-contain"
+                  />
+                </div>
+                <figcaption className="mt-2 text-center text-base italic text-muted">
+                  Your upload
+                </figcaption>
+              </figure>
+
               <div className="min-h-[260px]">
                 <AnimatePresence mode="wait">
                   {isLoading ? (
@@ -204,11 +211,12 @@ export default function UploadSection() {
                   ) : error ? (
                     <motion.div
                       key="error"
+                      role="alert"
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
-                      className="flex h-full min-h-[220px] flex-col items-center justify-center rounded-2xl border border-red-200 bg-white/80 p-8 text-center"
+                      className="flex h-full min-h-[220px] flex-col items-center justify-center border border-oxblood/30 bg-oxblood/[0.04] p-8 text-center"
                     >
-                      <p className="font-serif text-xl text-charcoal">{error}</p>
+                      <p className="font-serif text-xl text-oxblood">{error}</p>
                     </motion.div>
                   ) : (
                     <motion.div
@@ -223,13 +231,13 @@ export default function UploadSection() {
               </div>
             </div>
 
-            <div className="mt-6 flex justify-center">
+            <div className="mt-8 flex justify-center border-t border-rule pt-6">
               <button
                 type="button"
                 onClick={reset}
-                className="rounded-full border border-uop-blue/20 bg-white px-6 py-2.5 text-sm font-medium text-uop-blue shadow-sm transition hover:border-uop-gold hover:text-charcoal"
+                className="border border-bronze bg-paper px-7 py-2 font-serif text-lg text-ink transition-colors duration-200 hover:bg-bronze hover:text-paper"
               >
-                Clear / Try Another
+                Try another image
               </button>
             </div>
           </div>
