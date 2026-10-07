@@ -28,6 +28,7 @@ export default {
         serif: ['"EB Garamond"', 'Garamond', 'Georgia', 'serif'],
         sans: ['"EB Garamond"', 'Garamond', 'Georgia', 'serif'],
         brahmi: ['"Noto Sans Brahmi"', 'sans-serif'],
+        sinhala: ['"Noto Serif Sinhala"', '"Iskoola Pota"', '"Sinhala Sangam MN"', 'serif'],
       },
     },
   },

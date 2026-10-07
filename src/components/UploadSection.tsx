@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { useCallback, useRef, useState, type DragEvent, type ChangeEvent } from 'react'
 import { MAX_IMAGE_EDGE, recognizeCharacter, type Prediction } from '../config'
 import PredictionsPanel from './PredictionsPanel'
+import SupportedLetters from './SupportedLetters'
 
 const ACCEPT = ['image/jpeg', 'image/png', 'image/webp', 'image/gif']
 
@@ -135,6 +136,8 @@ export default function UploadSection() {
           returns a ranked list of likely classes.
         </p>
       </div>
+
+      <SupportedLetters />
 
       <div className="mt-10">
         {!hasImage ? (
